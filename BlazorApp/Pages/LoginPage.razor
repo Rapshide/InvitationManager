@@ -1,0 +1,52 @@
+﻿@page "/"
+
+
+    <div class="loginDiv">
+        <div class="logins">
+            <MudTextField @bind-Value="userName" Label="Felhasználónév" HelperText="Adja meg a felhasználó nevét" Variant="Variant.Filled" />
+            <MudTextField @bind-Value="password"
+                          Label="Jelszó"
+                          HelperText="Adja meg a jelszavát"
+                          Variant="Variant.Filled"
+                          InputType="@PasswordInput"
+                          Adornment="Adornment.End"
+                          AdornmentIcon="@PasswordInputIcon"
+                          OnAdornmentClick="ButtonTestclick"
+                          AdornmentAriaLabel="Jelszó mutatása" />
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary">Log in</MudButton>
+        </div>
+    </div>
+
+    
+           
+
+
+
+
+@code {
+    @inject NavigationManager NavigationManager
+
+    private string userName;
+    private string password;
+    private string errorMessage;
+
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    void ButtonTestclick()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+}

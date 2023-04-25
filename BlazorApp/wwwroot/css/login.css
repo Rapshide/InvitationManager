@@ -1,0 +1,20 @@
+﻿.logins {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 45%;
+    width: 30%;
+    background-color: aqua;
+    align-items: center;
+    display:grid;
+}
+
+.loginDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
