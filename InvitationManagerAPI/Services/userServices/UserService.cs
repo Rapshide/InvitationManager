@@ -23,10 +23,11 @@ namespace InvitationManagerAPI.Services.userServices
         public async Task<ServiceResponse<List<GetUserDto>>> AddUser(AddUserDto newUser)
         {
             var serviceResponse = new ServiceResponse<List<GetUserDto>>();
-            var user = _mapper.Map<protokollUser>(newUser);
-            user.Id = users.Max(x => x.Id) + 1;
-            users.Add(user);
+            var dbUser = _mapper.Map<protokollUser>(newUser);
+            dbUser.Id = _context.Users.Max(x => x.Id) + 1;
+            _context.Users.Add(dbUser);
             serviceResponse.Data = users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
+            await _context.SaveChangesAsync();
             return serviceResponse;
         }
 
@@ -41,7 +42,9 @@ namespace InvitationManagerAPI.Services.userServices
                     throw new Exception($"Felhasználó '{id}' Id val nem található");
                
                 _context.Users.Remove(dbUser);
-                              
+
+                await _context.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {
