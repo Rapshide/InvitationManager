@@ -1,4 +1,9 @@
-﻿using InvitationManagerAPI.Models;
+﻿using AutoMapper;
+using InvitationManagerAPI.Data;
+using InvitationManagerAPI.Dtos.User;
+using InvitationManagerAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace InvitationManagerAPI.Services.userServices
 {
@@ -9,31 +14,94 @@ namespace InvitationManagerAPI.Services.userServices
             new protokollUser (),
             new protokollUser { name = "nagy sanyi", Id = 1}
         };
-        public List<protokollUser> AddUser(protokollUser newUser)
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        public UserService(IMapper mapper, DataContext context)
         {
-            users.Add(newUser);
-            return users;
+            _context = context;
+            _mapper = mapper;
+        }
+        public async Task<ServiceResponse<List<GetUserDto>>> AddUser(AddUserDto newUser)
+        {
+            var serviceResponse = new ServiceResponse<List<GetUserDto>>();
+            var user = _mapper.Map<protokollUser>(newUser);
+            user.Id = users.Max(x => x.Id) + 1;
+            users.Add(user);
+            serviceResponse.Data = users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
+            return serviceResponse;
         }
 
-        public List<protokollUser> GetAllUser()
+        public async Task<ServiceResponse<List<GetUserDto>>> DeleteUser(int id)
         {
-            return users;
+            var serviceResponse = new ServiceResponse<List<GetUserDto>>();
+            try
+            {
+                var user = users.First(c => c.Id == id);
+
+                if (user == null)               
+                    throw new Exception($"Felhasználó '{id}' Id val nem található");
+               
+                users.Remove(user);
+
+                serviceResponse.Data = users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Succes = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
         }
 
-        public protokollUser GetUserById(int id)
+        public async Task<ServiceResponse<List<GetUserDto>>> GetAllUser()
         {
-            var user = users.FirstOrDefault(c => c.Id == id);
-
-            if (user is not null)
-            {
-                return user;
-            }
-            else
-            {
-                throw new Exception("Nem létező ID");
-            }
-
+            var serviceResponse = new ServiceResponse<List<GetUserDto>>();
+            var dbUsers = await _context.Users.ToListAsync();
+            serviceResponse.Data = dbUsers.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
+            return serviceResponse;
+        }
+        
+        public async Task<ServiceResponse<GetUserDto>> GetUserById(int id)
+        {
+            var serviceResponse = new ServiceResponse<GetUserDto>();
+            var dbUser = await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
+            serviceResponse.Data = _mapper.Map<GetUserDto>(dbUser);
+            return serviceResponse;
             
+        }
+
+        public async Task<ServiceResponse<GetUserDto>> UpdateUser(UpdateUserDto updatedUser)
+        {
+            var serviceResponse = new ServiceResponse<GetUserDto>();
+            try
+            {              
+                var user = users.FirstOrDefault(user => user.Id == updatedUser.Id);
+                if(user == null) 
+                {
+                    throw new Exception($"Felhasználó '{updatedUser.Id}' Id val nem található");
+                };           
+                user.name = updatedUser.name;
+                user.email = updatedUser.email;
+                user.telefonszám = updatedUser.telefonszám;
+                user.erzekenysegek = updatedUser.erzekenysegek;
+                user.vallás = updatedUser.vallás;
+                user.fogyatékosság = updatedUser.fogyatékosság;
+                user.titulus = updatedUser.titulus;
+                user.userType = updatedUser.userType;
+                user.ProfilePic = updatedUser.ProfilePic;
+                user.utolsóesemény = updatedUser.utolsóesemény;
+
+                serviceResponse.Data = _mapper.Map<GetUserDto>(user);
+                
+            }
+            catch(Exception ex) 
+            {
+                serviceResponse.Succes = false;
+                serviceResponse.Message = ex.Message;               
+            }
+            return serviceResponse;
+
         }
     }
 }

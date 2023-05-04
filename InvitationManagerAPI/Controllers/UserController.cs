@@ -1,4 +1,5 @@
-﻿using InvitationManagerAPI.Models;
+﻿using InvitationManagerAPI.Dtos.User;
+using InvitationManagerAPI.Models;
 using InvitationManagerAPI.Services.userServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,21 +22,43 @@ namespace InvitationManagerAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public ActionResult<List<protokollUser>> Get()
+        public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> Get()
         {
-            return Ok(_userService.GetAllUser());
+            return Ok(await _userService.GetAllUser());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<protokollUser>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetSingle(int id)
         {
-            return Ok(_userService.GetUserById(id));
+            return Ok(await _userService.GetUserById(id));
         }
 
         [HttpPost]
-        public ActionResult<List<protokollUser>> AddUser(protokollUser newUser)
+        public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> AddUser(AddUserDto newUser)
         {
-            return Ok(_userService.AddUser(newUser));
+            return Ok(await _userService.AddUser(newUser));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> UpdateUser(UpdateUserDto updateUserDto)
+        {
+            var response = await _userService.UpdateUser(updateUserDto);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetUserDto>>> DeleteUser(int id)
+        {
+            var response = await _userService.DeleteUser(id);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
     }
 }

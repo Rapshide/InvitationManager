@@ -1,12 +1,17 @@
-﻿using InvitationManagerAPI.Models;
+﻿using InvitationManagerAPI.Dtos.User;
+using InvitationManagerAPI.Models;
 
 namespace InvitationManagerAPI.Services.userServices
 {
     public interface IUserService
     {
-        List<protokollUser> GetAllUser();
-        protokollUser GetUserById(int id);
+        Task<ServiceResponse<List<GetUserDto>>> GetAllUser();
+        Task<ServiceResponse<GetUserDto>> GetUserById(int id);
+        Task<ServiceResponse<List<GetUserDto>>> AddUser(AddUserDto newUser);
+        Task<ServiceResponse<GetUserDto>> UpdateUser(UpdateUserDto updatedUser);
 
-        List<protokollUser> AddUser(protokollUser newUser);
+        Task<ServiceResponse<List<GetUserDto>>> DeleteUser(int id);
+
+
     }
 }
