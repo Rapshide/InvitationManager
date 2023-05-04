@@ -11,8 +11,7 @@ namespace InvitationManagerAPI.Services.userServices
     {
         private static List<protokollUser> users = new List<protokollUser>
         {
-            new protokollUser (),
-            new protokollUser { name = "nagy sanyi", Id = 1}
+           
         };
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -36,15 +35,13 @@ namespace InvitationManagerAPI.Services.userServices
             var serviceResponse = new ServiceResponse<List<GetUserDto>>();
             try
             {
-                var user = users.First(c => c.Id == id);
+                var dbUser = await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
 
-                if (user == null)               
+                if (dbUser == null)               
                     throw new Exception($"Felhasználó '{id}' Id val nem található");
                
-                users.Remove(user);
-
-                serviceResponse.Data = users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
-
+                _context.Users.Remove(dbUser);
+                              
             }
             catch (Exception ex)
             {
