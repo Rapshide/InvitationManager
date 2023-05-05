@@ -35,7 +35,7 @@ namespace InvitationManagerAPI.Controllers
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetUserDto>>>> AddUser(AddUserDto newUser)
-        {
+        {        
             return Ok(await _userService.AddUser(newUser));
         }
 

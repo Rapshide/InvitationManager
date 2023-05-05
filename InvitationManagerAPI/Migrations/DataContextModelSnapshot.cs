@@ -70,7 +70,7 @@ namespace InvitationManagerAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("usersX");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,14 +2,14 @@
 {
     public class AddUserDto
     {
-        public string email { get; set; } = "szia@mia.com";
-        public string telefonszám { get; set; } = "06204062116";
-        public string erzekenysegek { get; set; } = "fosok a cukortól";
-        public string vallás { get; set; } = "nem eszek birka herét";
-        public string fogyatékosság { get; set; } = "nincs lábam";
-        public string titulus { get; set; } = "Király";
-        public int userType { get; set; } = 1;
-        public string ProfilePic { get; set; } = "fosok a cukortól";
+        public string email { get; set; }
+        public string telefonszám { get; set; }
+        public string erzekenysegek { get; set; }
+        public string vallás { get; set; }
+        public string fogyatékosság { get; set; }
+        public string titulus { get; set; }
+        public int userType { get; set; }
+        public string ProfilePic { get; set; }
         public string utolsóesemény { get; set; }
         public string name { get; set; }
     }

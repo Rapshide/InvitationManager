@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvitationManagerAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230504160533_sas")]
-    partial class sas
+    [Migration("20230505131050_v2")]
+    partial class v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace InvitationManagerAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("usersX");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

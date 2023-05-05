@@ -23,12 +23,12 @@ namespace InvitationManagerAPI.Services.userServices
         public async Task<ServiceResponse<List<GetUserDto>>> AddUser(AddUserDto newUser)
         {
             var serviceResponse = new ServiceResponse<List<GetUserDto>>();
-            var dbUser = _mapper.Map<protokollUser>(newUser);
-            dbUser.Id = _context.Users.Max(x => x.Id) + 1;
+            var dbUser = _mapper.Map<protokollUser>(newUser);         
             _context.Users.Add(dbUser);
-            serviceResponse.Data = users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();
             await _context.SaveChangesAsync();
+            serviceResponse.Data = _context.Users.Select(x => _mapper.Map<GetUserDto>(x)).ToList();        
             return serviceResponse;
+            
         }
 
         public async Task<ServiceResponse<List<GetUserDto>>> DeleteUser(int id)
@@ -37,14 +37,10 @@ namespace InvitationManagerAPI.Services.userServices
             try
             {
                 var dbUser = await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
-
                 if (dbUser == null)               
-                    throw new Exception($"Felhasználó '{id}' Id val nem található");
-               
+                    throw new Exception($"Felhasználó '{id}' Id val nem található");              
                 _context.Users.Remove(dbUser);
-
                 await _context.SaveChangesAsync();
-
             }
             catch (Exception ex)
             {
@@ -76,7 +72,7 @@ namespace InvitationManagerAPI.Services.userServices
             var serviceResponse = new ServiceResponse<GetUserDto>();
             try
             {              
-                var user = users.FirstOrDefault(user => user.Id == updatedUser.Id);
+                var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == updatedUser.Id);
                 if(user == null) 
                 {
                     throw new Exception($"Felhasználó '{updatedUser.Id}' Id val nem található");
@@ -91,9 +87,8 @@ namespace InvitationManagerAPI.Services.userServices
                 user.userType = updatedUser.userType;
                 user.ProfilePic = updatedUser.ProfilePic;
                 user.utolsóesemény = updatedUser.utolsóesemény;
-
                 serviceResponse.Data = _mapper.Map<GetUserDto>(user);
-                
+                await _context.SaveChangesAsync();
             }
             catch(Exception ex) 
             {

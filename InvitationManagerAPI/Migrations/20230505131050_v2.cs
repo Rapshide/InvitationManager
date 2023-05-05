@@ -5,13 +5,13 @@
 namespace InvitationManagerAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class sas : Migration
+    public partial class v2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "usersX",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -29,7 +29,7 @@ namespace InvitationManagerAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_usersX", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 
@@ -37,7 +37,7 @@ namespace InvitationManagerAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "usersX");
+                name: "Users");
         }
     }
 }
