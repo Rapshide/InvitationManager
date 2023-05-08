@@ -14,19 +14,19 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(error: any) {
     console.log(error);
-    if(error.error && !error.error.statusCode){
-      error = new Error("You are unable to reach our servers. Maybe our server isn't running, or you are offline!");
-    } else if(error.status === 401){
+    if (error.error && !error.error.statusCode) {
+      error = new Error(
+        "You are unable to reach our servers. Maybe our server isn't running, or you are offline!"
+      );
+    } else if (error.status === 401) {
       this.zone.run(() => this.authService.logout());
       this.dialogRef.closeAll();
       return;
-    } else if(error.error && error.error.message){
+    } else if (error.error && error.error.message) {
       error = new Error(error.error.message);
     }
     this.zone.run(() =>
-      this.errorDialogService.openDialog(
-        error?.message || 'Undefined client error'
-      )
+      this.errorDialogService.openDialog(error?.message || 'Undefined client error')
     );
   }
 }

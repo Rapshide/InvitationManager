@@ -26,7 +26,12 @@
               [errorStateMatcher]="matcher"
               placeholder="Ex. pat@example.com"
             />
-            <mat-error *ngIf="form.controls['email'].hasError('email') && !form.controls['email'].hasError('required')">
+            <mat-error
+              *ngIf="
+                form.controls['email'].hasError('email') &&
+                !form.controls['email'].hasError('required')
+              "
+            >
               Please enter a valid email address
             </mat-error>
             <mat-error *ngIf="form.controls['email'].hasError('required')">

@@ -11,7 +11,7 @@ import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   public loading: boolean;
@@ -21,7 +21,11 @@ export class RegisterComponent {
   private destroyed$ = new Subject<void>();
 
   form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEXP)]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.pattern(EMAIL_REGEXP),
+    ]),
     password: new FormControl('', Validators.required),
   });
 
@@ -29,24 +33,27 @@ export class RegisterComponent {
     private loginService: LoginService,
     private authService: AuthService,
     private router: Router
-  ){}
+  ) {}
 
   submit() {
     this.error = undefined;
     this.loading = true;
     if (this.form.valid) {
-      this.loginService.register(this.form.value).pipe(
-        takeUntil(this.destroyed$),
-        finalize(()=> this.loading = false)
-      ).subscribe({
-        next: (response: Response<any>)=>{
-          this.authService.saveToken(response.result);
-          this.router.navigate(['']);
-        },
-        error: (error: HttpErrorResponse)=>{
-          throw new HttpErrorResponse(error);
-        }
-      })
+      this.loginService
+        .register(this.form.value)
+        .pipe(
+          takeUntil(this.destroyed$),
+          finalize(() => (this.loading = false))
+        )
+        .subscribe({
+          next: (response: Response<any>) => {
+            this.authService.saveToken(response.result);
+            this.router.navigate(['']);
+          },
+          error: (error: HttpErrorResponse) => {
+            throw new HttpErrorResponse(error);
+          },
+        });
     }
   }
 

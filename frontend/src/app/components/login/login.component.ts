@@ -9,7 +9,6 @@ import { Response } from 'src/app/models/response';
 import { Token } from 'src/app/models/token';
 import { LoginService } from 'src/app/services/login.service';
 
-
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -24,7 +23,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent {
   form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEXP)] ),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.pattern(EMAIL_REGEXP),
+    ]),
     password: new FormControl('', Validators.required),
   });
 
@@ -35,29 +38,29 @@ export class LoginComponent {
     private loginService: LoginService,
     private authService: AuthService,
     private router: Router
-  ){}
+  ) {}
 
   submit() {
     this.error = undefined;
     this.loading = true;
     if (this.form.valid) {
       this.loginService.login(this.form.value).subscribe({
-        next: (response: Response<Token>)=>{
+        next: (response: Response<Token>) => {
           this.authService.saveToken(response.result);
           this.router.navigate(['']);
         },
-        error: (error: HttpErrorResponse)=>{
+        error: (error: HttpErrorResponse) => {
           this.loading = false;
-          if(error.status === 401){
-            this.error = "Invalid credentials";
+          if (error.status === 401) {
+            this.error = 'Invalid credentials';
           } else {
             throw new HttpErrorResponse(error);
           }
         },
-        complete: ()=>{
+        complete: () => {
           this.loading = false;
-        }
-      })
+        },
+      });
     }
   }
 
