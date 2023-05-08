@@ -26,6 +26,7 @@ export class RegisterComponent {
       Validators.email,
       Validators.pattern(EMAIL_REGEXP),
     ]),
+    name: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
 
