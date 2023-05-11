@@ -52,8 +52,8 @@ export class RegisterComponent {
           finalize(() => (this.loading = false))
         )
         .subscribe({
-          next: (response: Response<any>) => {
-            this.authService.saveToken(response.result);
+          next: (response: any) => {
+            this.authService.saveToken(response.id);
             this.router.navigate(['']);
           },
           error: (error: HttpErrorResponse) => {

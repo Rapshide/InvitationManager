@@ -45,8 +45,8 @@ export class LoginComponent {
     this.loading = true;
     if (this.form.valid) {
       this.loginService.login(this.form.value).subscribe({
-        next: (response: Response<Token>) => {
-          this.authService.saveToken(response.result);
+        next: (response: {id: string; email: string}) => {
+          this.authService.saveToken(response.id);
           this.router.navigate(['']);
         },
         error: (error: HttpErrorResponse) => {
