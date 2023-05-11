@@ -11,16 +11,16 @@ export interface TimeType {
 }
 
 const ELEMENT_DATA: TimeType[] = [
-  {id: '1', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '2', title: 'Kövér cickány1', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '3', title: 'Kövér cickány2', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '4', title: 'Kövér cickány3', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '5', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '6', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '7', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '8', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '9', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
-  {id: '10', title: 'Kövér cickány', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '1', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '2', title: 'test user1', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '3', title: 'test user2', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '4', title: 'test user3', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '5', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '6', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '7', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '8', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '9', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
+  {id: '10', title: 'test user', description: 'Szia uram!', allDay: false, endDate: new Date(), startDate: new Date()},
 ];
 
 @Component({
