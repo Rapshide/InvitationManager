@@ -13,11 +13,11 @@ export class LoginService {
     private http: HttpClient
   ) { }
 
-  login(credentials: any): Observable<Response<Token>>{
-    return this.http.post<Response<Token>>(`${environment.baseURL}/api/login`, credentials);
+  login(credentials: any): Observable<{id: string; email: string}>{
+    return this.http.post<{id: string; email: string}>(`${environment.baseURL}/api/login`, credentials);
   }
 
-  register(form: any): Observable<Response<any>>{
-    return this.http.post<Response<any>>(`${environment.baseURL}/api/register`, form);
+  register(form: any): Observable<any>{
+    return this.http.post<any>(`${environment.baseURL}/api/register`, form);
   }
 }

@@ -54,7 +54,7 @@ export class RegisterComponent {
         .subscribe({
           next: (response: any) => {
             this.authService.saveToken(response.id);
-            this.router.navigate(['']);
+            this.router.navigate(['/', 'dashboard']);
           },
           error: (error: HttpErrorResponse) => {
             throw new HttpErrorResponse(error);
