@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subject, finalize, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { EMAIL_REGEXP } from 'src/app/models/email';
+import { MyTel } from 'src/app/models/phone';
 import { Response } from 'src/app/models/response';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -21,13 +22,15 @@ export class RegisterComponent {
   private destroyed$ = new Subject<void>();
 
   form: FormGroup = new FormGroup({
-    email: new FormControl('', [
+    Email: new FormControl('', [
       Validators.required,
       Validators.email,
       Validators.pattern(EMAIL_REGEXP),
     ]),
-    name: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    Name: new FormControl('', Validators.required),
+    Password: new FormControl('', Validators.required),
+    PhoneNumber: new FormControl(new MyTel('', '', ''), Validators.required),
+    Role: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -37,6 +40,8 @@ export class RegisterComponent {
   ) {}
 
   submit() {
+    console.log(this.form.value);
+    
     this.error = undefined;
     this.loading = true;
     if (this.form.valid) {

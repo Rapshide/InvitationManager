@@ -1,18 +1,23 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialExampleModule } from '../material.modul';
-import { ErrorDialogService } from '../errors/error-dialog.service';
-import { ErrorDialogComponent } from '../errors/component/error-dialog.component';
+import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { ErrorDialogComponent } from '../errors/component/error-dialog.component';
+import { ErrorDialogService } from '../errors/error-dialog.service';
+import { MaterialExampleModule } from '../material.modul';
+import  { MyTelInput } from './components/example-tel-input-example/example-tel-input-example.component'
+import { ReactiveFormsModule } from '@angular/forms';
+import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 @NgModule({
   declarations: [
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    MyTelInput,
+    PhoneInputComponent,
   ],
   imports: [
     CommonModule,
     MaterialExampleModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [
     ErrorDialogService
@@ -21,7 +26,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     MaterialExampleModule,
     ErrorDialogComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PhoneInputComponent
   ]
 })
 export class SharedModule { }

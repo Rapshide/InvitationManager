@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthService } from './auth/auth.service';
@@ -21,7 +22,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
-
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, MainComponent],
@@ -52,6 +52,7 @@ import { SharedModule } from './shared/shared.module';
     NotAuthGuardService,
     JwtHelperService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent],
 })

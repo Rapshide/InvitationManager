@@ -14,10 +14,10 @@ export class LoginService {
   ) { }
 
   login(credentials: any): Observable<Response<Token>>{
-    return this.http.post<Response<Token>>(`${environment.baseURL}/auth/login`, credentials);
+    return this.http.post<Response<Token>>(`${environment.baseURL}/api/login`, credentials);
   }
 
   register(form: any): Observable<Response<any>>{
-    return this.http.post<Response<any>>(`${environment.baseURL}/auth/register`, form);
+    return this.http.post<Response<any>>(`${environment.baseURL}/api/register`, form);
   }
 }

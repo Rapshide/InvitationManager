@@ -11,16 +11,16 @@
         <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Email</mat-label>
-            <input type="text" matInput formControlName="email" placeholder="Ex. pat@example.com" />
-            <mat-error *ngIf="form.hasError('email', 'email')"> Please type valid email </mat-error>
-            <mat-error *ngIf="form.hasError('required', 'email')">
+            <input type="text" matInput formControlName="Email" placeholder="Ex. pat@example.com" />
+            <mat-error *ngIf="form.hasError('email', 'Email')"> Please type valid email </mat-error>
+            <mat-error *ngIf="form.hasError('required', 'Email')">
               Please type your email
             </mat-error>
           </mat-form-field>
           <mat-form-field class="w-100" appearance="outline">
-            <mat-label>name</mat-label>
-            <input type="text" matInput formControlName="name" placeholder="JaniVagyok" />
-            <mat-error *ngIf="form.hasError('required', 'name')">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="Name" placeholder="JaniVagyok" />
+            <mat-error *ngIf="form.hasError('required', 'Name')">
               Please type your name
             </mat-error>
           </mat-form-field>
@@ -29,16 +29,27 @@
             <input
               [type]="showPassword ? 'text' : 'password'"
               matInput
-              formControlName="password"
+              formControlName="Password"
               placeholder="Ex. example69"
             />
             <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
               showPassword ? 'visibility_off' : 'visibility'
             }}</mat-icon>
-            <mat-error *ngIf="form.hasError('required', 'password')">
+            <mat-error *ngIf="form.hasError('required', 'Password')">
               Please enter your password
             </mat-error>
           </mat-form-field>
+
+          <app-phone-input [hasFormControlName]="'PhoneNumber'" [hasFormGroup]="form"></app-phone-input>
+
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Role</mat-label>
+            <input type="text" matInput formControlName="Role" placeholder="president" />
+            <mat-error *ngIf="form.hasError('required', 'Role')">
+              Please type your role
+            </mat-error>
+          </mat-form-field>
+
           <div class="button mt-15">
             <button
               class="loading w-100"
