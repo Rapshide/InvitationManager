@@ -21,6 +21,11 @@ export class RegisterComponent {
 
   private destroyed$ = new Subject<void>();
 
+  configurationForm: FormGroup = new FormGroup({
+    phone: new FormControl(new MyTel('', '', ''), Validators.required)
+  })
+
+
   form: FormGroup = new FormGroup({
     Email: new FormControl('', [
       Validators.required,
@@ -29,7 +34,7 @@ export class RegisterComponent {
     ]),
     Name: new FormControl('', Validators.required),
     Password: new FormControl('', Validators.required),
-    PhoneNumber: new FormControl(new MyTel('', '', ''), Validators.required),
+    PhoneNumber: new FormControl(''),
     Role: new FormControl('', Validators.required),
   });
 
@@ -40,8 +45,9 @@ export class RegisterComponent {
   ) {}
 
   submit() {
-    console.log(this.form.value);
-    
+    let number: number = this.configurationForm.value['phone'].area + this.configurationForm.value['phone'].exchange + this.configurationForm.value['phone'].subscriber;
+    this.form.get('PhoneNumber').setValue(number);
+  
     this.error = undefined;
     this.loading = true;
     if (this.form.valid) {
@@ -53,7 +59,7 @@ export class RegisterComponent {
         )
         .subscribe({
           next: (response: any) => {
-            this.authService.saveToken(response.id);
+            // this.authService.saveToken(response.id);
             this.router.navigate(['/', 'dashboard']);
           },
           error: (error: HttpErrorResponse) => {
