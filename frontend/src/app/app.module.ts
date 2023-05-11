@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -22,9 +22,13 @@ import { RegisterComponent } from './components/register/register.component';
 import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
-
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EditTimeComponent } from './components/edit-time/edit-time.component';
+import { registerLocaleData } from '@angular/common';
+import localeHu from '@angular/common/locales/hu';
+registerLocaleData(localeHu);
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, MainComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent, EditTimeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,7 +39,6 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     SharedModule,
     FormsModule,
-    MatDialogModule,
   ],
   providers: [
     {
@@ -53,6 +56,7 @@ import { SharedModule } from './shared/shared.module';
     JwtHelperService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     provideEnvironmentNgxMask(),
+    { provide: LOCALE_ID, useValue: 'hu' },
   ],
   bootstrap: [AppComponent],
 })

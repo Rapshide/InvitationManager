@@ -1,1 +1,43 @@
-<p>dashboard works!</p>
+<div class="navbar">
+  <div>Dashboard</div>
+  <div class="cursor-pointer" [routerLink]="['/']">logout</div>
+</div>
+<div class="m-10 wrapper">
+  <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="posteddate" matSortDirection="asc">
+  
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> StartDate </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDate | date}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef> EndDate </th>
+      <td mat-cell *matCellDef="let element"> {{element.endDate | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="allDay">
+      <th mat-header-cell *matHeaderCellDef> AllDay </th>
+      <td mat-cell *matCellDef="let element"> {{element.allDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="editTime(element.id)">edit</button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
