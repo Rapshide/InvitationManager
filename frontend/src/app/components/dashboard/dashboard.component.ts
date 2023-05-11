@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 export interface TimeType {
@@ -28,7 +28,7 @@ const ELEMENT_DATA: TimeType[] = [
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent {
 
   constructor(private readonly router: Router){}
 
@@ -39,15 +39,5 @@ export class DashboardComponent implements AfterViewInit {
 
   editTime(id: string): void {
     this.router.navigate(['/', 'dashboard', 'edit', `${id}`]);
-  }
-
-
-  ngAfterViewInit(): void {
-    let height = (<HTMLElement>this.table.nativeElement).getBoundingClientRect().height;
-    if (height >= 549) {
-      this.table.nativeElement.style.height = `calc(100vh - 358px)`;
-    } else {
-      this.table.nativeElement.style.height = 'none';
-    }
   }
 }
