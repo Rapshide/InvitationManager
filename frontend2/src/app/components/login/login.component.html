@@ -1,0 +1,70 @@
+<div class="full-height">
+  <div class="custom-width">
+    <ng-container *ngIf="loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-container>
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <div class="content-wrapper">
+          <div class="title">Sign in to InvitationManager</div>
+        </div>
+        <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              formControlName="email"
+              [errorStateMatcher]="matcher"
+              placeholder="Ex. pat@example.com"
+            />
+            <mat-error
+              *ngIf="
+                form.controls['email'].hasError('email') &&
+                !form.controls['email'].hasError('required')
+              "
+            >
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="form.controls['email'].hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              matInput
+              formControlName="password"
+              placeholder="Ex. example69"
+            />
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
+              showPassword ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+            <mat-error *ngIf="form.hasError('required', 'password')">
+              Please enter your password
+            </mat-error>
+          </mat-form-field>
+          <div class="button mt-15">
+            <button
+              class="loading w-100"
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="form.invalid || loading"
+            >
+              <ng-container *ngIf="loading"> Signing in... </ng-container>
+              <ng-container *ngIf="!loading"> Sign In </ng-container>
+            </button>
+          </div>
+        </form>
+        <div class="mt-30">
+          <a routerLink="/register">Create new account here</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
