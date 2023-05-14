@@ -34,18 +34,18 @@ import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ApplicationInitializerFactory } from './translation.config';
+// import {
+//   TranslateLoader,
+//   TranslateModule,
+//   TranslateService,
+// } from '@ngx-translate/core';
+// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { ApplicationInitializerFactory } from './translation.config';
 registerLocaleData(localeHu);
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http);
+// }
 
 @NgModule({
   declarations: [
@@ -85,12 +85,12 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: AuthInterceptor,
       multi: true,
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: ApplicationInitializerFactory,
-      deps: [TranslateService, Injector],
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: ApplicationInitializerFactory,
+    //   deps: [TranslateService, Injector],
+    //   multi: true,
+    // },
     AuthService,
     AuthGuardService,
     NotAuthGuardService,

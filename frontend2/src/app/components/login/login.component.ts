@@ -1,17 +1,29 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { EMAIL_REGEXP } from 'src/app/models/email';
 import { LoginService } from 'src/app/services/login.service';
-import {TranslateService} from '@ngx-translate/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
   }
 }
 
@@ -36,22 +48,15 @@ export class LoginComponent {
   constructor(
     private loginService: LoginService,
     private authService: AuthService,
-    private router: Router,
-    public translate: TranslateService
-  ) {
-    translate.addLangs(['en', 'fr']);
-    translate.setDefaultLang('en');
-
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-  }
+    private router: Router
+  ) {}
 
   submit() {
     this.error = undefined;
     this.loading = true;
     if (this.form.valid) {
       this.loginService.login(this.form.value).subscribe({
-        next: (response: {id: string; email: string}) => {
+        next: (response: { id: string; email: string }) => {
           this.router.navigate(['/', 'dashboard']);
         },
         error: (error: HttpErrorResponse) => {
