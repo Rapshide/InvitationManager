@@ -5,8 +5,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { EMAIL_REGEXP } from 'src/app/models/email';
-import { Response } from 'src/app/models/response';
-import { Token } from 'src/app/models/token';
 import { LoginService } from 'src/app/services/login.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {

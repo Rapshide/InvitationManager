@@ -7,25 +7,22 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeHu from '@angular/common/locales/hu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthService } from './auth/auth.service';
 import { NotAuthGuardService } from './auth/not-auth-guard.service';
-import { HomeComponent } from './components/home/home.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EditTimeComponent } from './components/edit-time/edit-time.component';
 import { LoginComponent } from './components/login/login.component';
-import { MainComponent } from './components/main/main.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { EditTimeComponent } from './components/edit-time/edit-time.component';
-import { registerLocaleData } from '@angular/common';
-import localeHu from '@angular/common/locales/hu';
 registerLocaleData(localeHu);
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent, EditTimeComponent],
