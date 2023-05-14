@@ -32,8 +32,6 @@
     "@fullcalendar/interaction": "^6.1.7",
     "@fullcalendar/list": "^6.1.7",
     "@fullcalendar/timegrid": "^6.1.7",
-    "@ngx-translate/core": "^15.0.0",
-    "@ngx-translate/http-loader": "^8.0.0",
     "ngx-mask": "^15.1.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
