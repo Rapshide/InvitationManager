@@ -1,16 +1,13 @@
 import {
-  APP_INITIALIZER,
   ErrorHandler,
-  Injector,
   LOCALE_ID,
-  NgModule,
+  NgModule
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import {
   HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpClientModule,
+  HttpClientModule
 } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -21,7 +18,9 @@ import { registerLocaleData } from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthService } from './auth/auth.service';
@@ -33,9 +32,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { TranslocoRootModule } from './transloco-root.module';
-import { NgxPermissionsModule } from 'ngx-permissions';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 registerLocaleData(localeHu);
 
 @NgModule({
@@ -45,6 +43,7 @@ registerLocaleData(localeHu);
     RegisterComponent,
     DashboardComponent,
     EditTimeComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

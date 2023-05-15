@@ -4,6 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditTimeComponent } from './components/edit-time/edit-time.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -12,7 +14,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
   },
-  { path: 'dashboard/edit/:id', component: EditTimeComponent },
+  { path: 'dashboard/user/:id', component: UserEditComponent, canLoad: [NgxPermissionsGuard], data: { permissions: {only: 'admin', redirectTo: '/' } }, }
 ];
 
 @NgModule({
