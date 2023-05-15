@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
   },
-  { path: 'dashboard/user/:id', component: UserEditComponent, canLoad: [NgxPermissionsGuard], data: { permissions: {only: 'admin', redirectTo: '/' } }, }
+  { path: 'dashboard/user/:id', component: UserEditComponent, canActivate: [NgxPermissionsGuard], data: { permissions: {only: 'Admin', redirectTo: '/' } }, }
 ];
 
 @NgModule({

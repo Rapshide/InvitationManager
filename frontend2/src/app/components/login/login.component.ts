@@ -10,6 +10,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { EMAIL_REGEXP } from 'src/app/models/email';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -49,6 +50,7 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private TranslocoService: TranslocoService,
+    private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   submit() {
@@ -58,6 +60,7 @@ export class LoginComponent {
       this.loginService.login(this.form.value).subscribe({
         next: (response: { id: string; email: string }) => {
           this.router.navigate(['/', 'dashboard']);
+          this.ngxPermissionsService.loadPermissions(['Admin']);
         },
         error: (error: HttpErrorResponse) => {
           this.loading = false;
