@@ -50,7 +50,7 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private TranslocoService: TranslocoService,
-    private ngxPermissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService
   ) {}
 
   submit() {
@@ -58,9 +58,9 @@ export class LoginComponent {
     this.loading = true;
     if (this.form.valid) {
       this.loginService.login(this.form.value).subscribe({
-        next: (response: { id: string; email: string }) => {
+        next: (response: { id: string; email: string }) => { // TODO ÁTÍRNI A TYPE-OT
+          this.permissionsService.addPermission(['Admin']); // TODO ÁTÍRNI A ROLE-T 
           this.router.navigate(['/', 'dashboard']);
-          this.ngxPermissionsService.loadPermissions(['Admin']);
         },
         error: (error: HttpErrorResponse) => {
           this.loading = false;
@@ -83,9 +83,6 @@ export class LoginComponent {
 
   @Input() error: string | null;
   matcher = new MyErrorStateMatcher();
-
-
-
 
   changeLang(lang: string): void {
     this.TranslocoService.setActiveLang(lang);

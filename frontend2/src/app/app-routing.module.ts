@@ -13,12 +13,26 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [NgxPermissionsGuard],
+    canActivateChild: [NgxPermissionsGuard],
+    data: {
+      permissions: { only: 'Admin' },
+    },
+    children: [
+      {
+        path: 'anyad',
+        component: UserEditComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: { only: 'Admin' },
+        },
+      },
+    ]
   },
-  { path: 'dashboard/user/:id', component: UserEditComponent, canActivate: [NgxPermissionsGuard], data: { permissions: {only: 'Admin', redirectTo: '/' } }, }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
