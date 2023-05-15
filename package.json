@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ngx-permissions": "^15.0.1"
+  }
+}

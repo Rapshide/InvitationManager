@@ -1,3 +1,5 @@
+<button (click)="changeLang('en')">english</button>
+<button (click)="changeLang('hu')">hu</button>
 <div class="full-height">
   <div class="custom-width">
     <ng-container *ngIf="loading">
@@ -9,17 +11,17 @@
     <mat-card>
       <mat-card-content>
         <div class="content-wrapper">
-          <div class="title">Sign in to InvitationManager</div>
+          <div class="title">{{ "login.loginLogo" | transloco }}</div>
         </div>
         <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
           <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label>{{ "login.loginEmail" | transloco }}</mat-label>
             <input
               type="email"
               matInput
               formControlName="email"
               [errorStateMatcher]="matcher"
-              placeholder="Ex. pat@example.com"
+              placeholder="{{ 'login.loginEmailPlaceholder' | transloco }}"
             />
             <mat-error
               *ngIf="
@@ -27,25 +29,26 @@
                 !form.controls['email'].hasError('required')
               "
             >
-              Please enter a valid email address
+              {{ "login.loginEmailValidateError" | transloco }}
             </mat-error>
             <mat-error *ngIf="form.controls['email'].hasError('required')">
-              Email is <strong>required</strong>
+              {{ "login.loginEmailError1" | transloco }}
+              <strong>{{ "login.loginEmailError2" | transloco }}</strong>
             </mat-error>
           </mat-form-field>
           <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label>{{ "login.loginPassword" | transloco }}</mat-label>
             <input
               [type]="showPassword ? 'text' : 'password'"
               matInput
               formControlName="password"
-              placeholder="Ex. example69"
+              [placeholder]="'login.loginPasswordPlaceholder' | transloco"
             />
             <mat-icon matSuffix (click)="togglePasswordVisibility()">{{
-              showPassword ? 'visibility_off' : 'visibility'
+              showPassword ? "visibility_off" : "visibility"
             }}</mat-icon>
             <mat-error *ngIf="form.hasError('required', 'password')">
-              Please enter your password
+              {{ "login.loginPasswordError" | transloco }}
             </mat-error>
           </mat-form-field>
           <div class="button mt-15">
@@ -56,13 +59,17 @@
               color="primary"
               [disabled]="form.invalid || loading"
             >
-              <ng-container *ngIf="loading"> Signing in... </ng-container>
-              <ng-container *ngIf="!loading"> Sign In </ng-container>
+              <ng-container *ngIf="loading">
+                {{ "login.loginButtonPressed" | transloco }}
+              </ng-container>
+              <ng-container *ngIf="!loading">
+                {{ "login.loginButton" | transloco }}
+              </ng-container>
             </button>
           </div>
         </form>
         <div class="mt-30">
-          <a routerLink="/register">Create new account here</a>
+          <a routerLink="/register">{{ "login.loginRouteRegister" | transloco }}</a>
         </div>
       </mat-card-content>
     </mat-card>

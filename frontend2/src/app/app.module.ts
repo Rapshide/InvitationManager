@@ -34,18 +34,9 @@ import { GlobalErrorHandler } from './errors/global-error-handler';
 import { MaterialExampleModule } from './material.modul';
 import { SharedModule } from './shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
-// import {
-//   TranslateLoader,
-//   TranslateModule,
-//   TranslateService,
-// } from '@ngx-translate/core';
-// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-// import { ApplicationInitializerFactory } from './translation.config';
+import { TranslocoRootModule } from './transloco-root.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 registerLocaleData(localeHu);
-
-// export function HttpLoaderFactory(http: HttpClient) {
-//   return new TranslateHttpLoader(http);
-// }
 
 @NgModule({
   declarations: [
@@ -67,13 +58,8 @@ registerLocaleData(localeHu);
     FormsModule,
     FullCalendarModule,
     HttpClientModule,
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: HttpLoaderFactory,
-    //     deps: [HttpClient],
-    //   },
-    // }),
+    TranslocoRootModule,
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     {
@@ -85,12 +71,6 @@ registerLocaleData(localeHu);
       useClass: AuthInterceptor,
       multi: true,
     },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: ApplicationInitializerFactory,
-    //   deps: [TranslateService, Injector],
-    //   multi: true,
-    // },
     AuthService,
     AuthGuardService,
     NotAuthGuardService,

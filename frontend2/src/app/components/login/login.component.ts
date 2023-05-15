@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
+import { TranslocoService } from '@ngneat/transloco';
 import { EMAIL_REGEXP } from 'src/app/models/email';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -47,8 +47,8 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private TranslocoService: TranslocoService,
   ) {}
 
   submit() {
@@ -80,4 +80,11 @@ export class LoginComponent {
 
   @Input() error: string | null;
   matcher = new MyErrorStateMatcher();
+
+
+
+
+  changeLang(lang: string): void {
+    this.TranslocoService.setActiveLang(lang);
+  }
 }
