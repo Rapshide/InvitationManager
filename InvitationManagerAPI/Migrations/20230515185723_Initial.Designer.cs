@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvitationManagerAPI.Migrations
 {
     [DbContext(typeof(InvitationManagerDbContext))]
-    [Migration("20230511151950_Second")]
-    partial class Second
+    [Migration("20230515185723_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,18 @@ namespace InvitationManagerAPI.Migrations
 
             modelBuilder.Entity("InvitationManagerAPI.Models.CalendarBookings", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<bool>("AllDay")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("datetime2");
@@ -39,8 +46,14 @@ namespace InvitationManagerAPI.Migrations
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Zip")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -56,17 +69,26 @@ namespace InvitationManagerAPI.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TokenCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 

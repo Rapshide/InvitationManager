@@ -24,11 +24,18 @@ namespace InvitationManagerAPI.Migrations
 
             modelBuilder.Entity("InvitationManagerAPI.Models.CalendarBookings", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<bool>("AllDay")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("datetime2");
@@ -36,12 +43,18 @@ namespace InvitationManagerAPI.Migrations
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Zip")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("InvitationManagerAPI.Models.User", b =>
@@ -62,12 +75,21 @@ namespace InvitationManagerAPI.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("TokenCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TokenExpires")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ID");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 #pragma warning restore 612, 618
         }

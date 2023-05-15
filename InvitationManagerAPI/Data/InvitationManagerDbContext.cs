@@ -11,7 +11,6 @@ namespace InvitationManagerAPI.Data
         }
 
         public DbSet<User> User { get; set; }
-
         public DbSet<CalendarBookings> Bookings { get; set; }
     }
 }

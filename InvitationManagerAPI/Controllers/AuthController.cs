@@ -1,15 +1,14 @@
 ﻿using InvitationManagerAPI.Data;
 using InvitationManagerAPI.Models;
-using Microsoft.AspNetCore.Http;
+using InvitationManagerAPI.Services.UserService;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
-using MySqlConnector;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 
@@ -17,26 +16,63 @@ namespace InvitationManagerAPI.Controllers
 {
 
 
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public AuthController(InvitationManagerDbContext invitationManagerDbContext)
+        public static User user = new User();
+
+
+        private readonly InvitationManagerDbContext _invitationManagerDbContext;
+        private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
+
+        public AuthController(IConfiguration configuration, IUserService userService, InvitationManagerDbContext invitationManagerDbContext)
         {
+            _configuration = configuration;
+            _userService = userService;
             _invitationManagerDbContext = invitationManagerDbContext;
         }
 
-        private readonly InvitationManagerDbContext _invitationManagerDbContext;
-
-        [HttpGet]
-        [Route("list")]
-        public async Task<IActionResult> GetAllUsers()
+        [HttpGet, Authorize]
+        public ActionResult<string> GetMyName()
         {
-            var users = await _invitationManagerDbContext.User.ToListAsync();
-
-            return Ok(users);
+            return Ok(_userService.GetMyName());
         }
 
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginUser([FromBody]UserLogin loginUser)
+        {
+
+            var dbUser = _invitationManagerDbContext.User.Where(u => u.Email == loginUser.Email && u.Password == loginUser.Password)
+                .Select(u => new
+                {
+                    u.ID,
+                    u.Email,
+                    u.Role
+
+                }).FirstOrDefault();
+
+            if (dbUser == null)
+            {
+                return BadRequest("Nem megfelelő email cím vagy jelszó!");
+            }
+
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, dbUser.Email),
+                new Claim(ClaimTypes.Role, dbUser.Role)
+            };
+
+            string token = CreateToken(claims);
+
+            return Ok(token);
+        }
+
+
+        //Felhasználó regisztráció
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> AddUser([FromBody] User userRequest)
@@ -49,6 +85,20 @@ namespace InvitationManagerAPI.Controllers
             return Ok(userRequest);
         }
 
+        //Összes felhasználó lekérése
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("list")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _invitationManagerDbContext.User.ToListAsync();
+
+            return Ok(users);
+        }
+
+
+        //Felhasználó lekérése
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid id)
@@ -63,9 +113,11 @@ namespace InvitationManagerAPI.Controllers
             return Ok(user);
         }
 
+        //Felhasználói adatok átírása
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, UserRegister updateUser)
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, UserUpdate updateUser)
         {
             var user = await _invitationManagerDbContext.User.FindAsync(id);
 
@@ -84,13 +136,16 @@ namespace InvitationManagerAPI.Controllers
             return Ok(user);
         }
 
+
+        //Felhasználó törlése
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> DeleteUser([FromRoute]Guid id)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             var user = await _invitationManagerDbContext.User.FindAsync(id);
 
-            if(user == null) 
+            if (user == null)
             {
                 return NotFound(user);
             }
@@ -99,88 +154,25 @@ namespace InvitationManagerAPI.Controllers
             await _invitationManagerDbContext.SaveChangesAsync();
             return Ok(user);
         }
+ 
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> LoginUser(UserLogin user)
+        private string CreateToken(List<Claim> claims)
         {
-            
 
-            var dbUser = _invitationManagerDbContext.User.Where(u => u.Email == user.Email && u.Password == user.Password)
-                .Select( u => new
-                {
-                    u.ID,
-                    u.Email
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration.GetSection("AppSettings:Token").Value!));
 
-                }).FirstOrDefault();
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            if(dbUser == null)
-            {
-                return BadRequest("Nem megfelelő email cím vagy jelszó!");
-            }
+            var token = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddHours(1),
+                    signingCredentials: creds
+                );
 
-             return Ok(dbUser);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
-
-
-        //public static User user = new User();
-
-        //private readonly IConfiguration _configuration;
-
-        //public AuthController(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-
-        //[HttpPost("register")]
-        //public ActionResult<User> Register(UserDto request)
-        //{
-        //    string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-        //    user.Email = request.Email;
-        //    user.PasswordHash = passwordHash;
-
-        //    return Ok(user);
-        //}
-
-        //[HttpPost("login")]
-        //public ActionResult<User> Login(UserDto request)
-        //{
-        //    if(user.Email != request.Email)
-        //    {
-        //        return BadRequest("Nem létező felhasználónév.");
-        //    }
-
-        //    if(!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-        //    {
-        //        return BadRequest("Nem megfelelő jelszó.");
-        //    }
-
-        //    string token = CreateToken(user);
-
-        //    return Ok(token);
-
-        //}
-
-        //private string CreateToken(User user)
-        //{
-        //    List<Claim> claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.Name, user.Email)
-        //    };
-
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
-
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        //    var token = new JwtSecurityToken(
-        //            claims: claims,
-        //            expires: DateTime.Now.AddDays(1),
-        //            signingCredentials: creds
-        //        );
-        //    var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //    return jwt;
-        //}
     }
 }

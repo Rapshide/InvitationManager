@@ -1,14 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0788d0a8-1a7e-4528-a139-36143a2c7244</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
@@ -18,6 +20,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.29.0" />
     <PackageReference Include="MySqlConnector" Version="2.2.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.29.0" />
   </ItemGroup>
 
