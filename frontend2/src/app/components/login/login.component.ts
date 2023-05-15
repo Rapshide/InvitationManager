@@ -76,7 +76,6 @@ export class LoginComponent {
       });
     }
   }
-
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }

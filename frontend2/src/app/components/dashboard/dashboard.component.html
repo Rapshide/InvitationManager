@@ -1,6 +1,8 @@
 <div class="navbar">
   <div>Dashboard</div>
   <div class="cursor-pointer" [routerLink]="['/']">logout</div>
+  <!-- TODO Azért van ez itt mivel simán url-ből nem engedi navigálni az oldalra ezt is megkell szépen csinálni. -->
+  <div [routerLink]="['/', 'dashboard', 'user']">userEdit</div> 
 </div>
 <div class='demo-app'>
 
