@@ -68,7 +68,7 @@ namespace InvitationManagerAPI.Controllers
 
             string token = CreateToken(claims);
 
-            return Ok(token);
+            return Ok(dbUser);
         }
 
 
