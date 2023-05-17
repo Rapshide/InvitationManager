@@ -1,0 +1,16 @@
+{
+    "login": {
+        "loginLogo": "Belépés a InvitationManager-be",
+        "loginEmail": "Email",
+        "loginEmailPlaceholder": "Pl. pat@example.com",
+        "loginEmailValidateError": "Kérlek adj meg egy igazi emailt!",
+        "loginEmailError1": "Az email ",
+        "loginEmailError2": "kötelező",
+        "loginPassword": "Jelszó",
+        "loginPasswordPlaceholder": "Pl. Példa69",
+        "loginPasswordError": "Kérlek adj meg egy jelszót!",
+        "loginButton": "Belépés",
+        "loginButtonPressed": "Belépés...",
+        "loginRouteRegister": "Új felhasználó létrehozása."
+    }
+}

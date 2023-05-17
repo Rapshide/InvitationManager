@@ -1,0 +1,16 @@
+{
+    "login": {
+        "loginLogo": "Sign in to InvitationManager",
+        "loginEmail": "Email",
+        "loginEmailPlaceholder": "Ex. pat@example.com",
+        "loginEmailValidateError": "Please enter a valid email address",
+        "loginEmailError1": "Email is",
+        "loginEmailError2": "required",
+        "loginPassword": "Password",
+        "loginPasswordPlaceholder": "Ex. example69",
+        "loginPasswordError": "Please enter your password",
+        "loginButton": "Sign In",
+        "loginButtonPressed": "Signing in...",
+        "loginRouteRegister": "Create new account here"
+    }
+}
