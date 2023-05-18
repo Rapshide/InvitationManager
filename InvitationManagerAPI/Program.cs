@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-=======
 using InvitationManagerAPI.Data;
 using InvitationManagerAPI.Services.personServices;
 using InvitationManagerAPI.Services.UserService;
@@ -11,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
->>>>>>> Stashed changes
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +20,6 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-<<<<<<< Updated upstream
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication().AddJwtBearer();
-=======
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -60,7 +52,6 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 
 
 
->>>>>>> Stashed changes
 
 var app = builder.Build();
 

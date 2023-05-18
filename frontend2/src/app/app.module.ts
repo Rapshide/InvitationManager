@@ -51,7 +51,8 @@ registerLocaleData(localeHu);
     HomeComponent,
     PersonByIdComponent,
     PersonComponent,
-    MainComponent
+    MainComponent,
+    
   ],
   imports: [
     BrowserModule,

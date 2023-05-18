@@ -20,19 +20,9 @@ export class PersonComponent{
   ) {}
   
 
+
   ngOnInit(): void {
     this.getUsers();
-
-    const search = document.querySelector('input-group input'),
-          table_rows = document.querySelectorAll('ng-container td');
-      
-    search.addEventListener('input', searchTable);
-
-    function searchTable() {
-      table_rows.forEach((row, i) => {
-          console.log(row)
-      });
-    }
   }
 
   // Felhasználó lekérése

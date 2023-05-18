@@ -1,58 +1,50 @@
-﻿using InvitationManagerAPI.Models;
-using Microsoft.AspNetCore.Http;
+﻿using InvitationManagerAPI.Data;
+using InvitationManagerAPI.Models;
+using InvitationManagerAPI.Services.UserService;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+
 
 namespace InvitationManagerAPI.Controllers
 {
-    [Route("api/[controller]")]
+
+
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         public static User user = new User();
 
-<<<<<<< Updated upstream
-=======
 
         private readonly DataContext _dataContext;
->>>>>>> Stashed changes
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-<<<<<<< Updated upstream
-        public AuthController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-=======
         public AuthController(IConfiguration configuration, IUserService userService, DataContext invitationManagerDbContext)
         {
             _configuration = configuration;
             _userService = userService;
             _dataContext = invitationManagerDbContext;
->>>>>>> Stashed changes
         }
 
-        [HttpPost("register")]
-        public ActionResult<User> Register(UserDto request)
+        [HttpGet, Authorize]
+        public ActionResult<string> GetMyName()
         {
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-            user.Username = request.Username;
-            user.PasswordHash = passwordHash;
-
-            return Ok(user);
+            return Ok(_userService.GetMyName());
         }
 
-        [HttpPost("login")]
-        public ActionResult<User> Login(UserDto request)
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginUser([FromBody]UserLogin loginUser)
         {
-<<<<<<< Updated upstream
-            if(user.Username != request.Username)
-=======
 
             var dbUser = _dataContext.User.Where(u => u.Email == loginUser.Email && u.Password == loginUser.Password)
                 .Select(u => new
@@ -64,31 +56,27 @@ namespace InvitationManagerAPI.Controllers
                 }).FirstOrDefault();
 
             if (dbUser == null)
->>>>>>> Stashed changes
             {
-                return BadRequest("Nem létező felhasználónév.");
+                return BadRequest("Nem megfelelő email cím vagy jelszó!");
             }
 
-            if(!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            List<Claim> claims = new List<Claim>
             {
-                return BadRequest("Nem megfelelő jelszó.");
-            }
+                new Claim(ClaimTypes.Name, dbUser.Email),
+                new Claim(ClaimTypes.Role, dbUser.Role)
+            };
 
-            string token = CreateToken(user);
+            string token = CreateToken(claims);
 
-<<<<<<< Updated upstream
-            return Ok(token);
-
-=======
             return Ok(dbUser);
->>>>>>> Stashed changes
         }
 
-        private string CreateToken(User user)
+
+        //Felhasználó regisztráció
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> AddUser([FromBody] User userRequest)
         {
-<<<<<<< Updated upstream
-            List<Claim> claims = new List<Claim>
-=======
             userRequest.ID = Guid.NewGuid();
 
             await _dataContext.User.AddAsync(userRequest);
@@ -118,14 +106,10 @@ namespace InvitationManagerAPI.Controllers
             var user = await _dataContext.User.FirstOrDefaultAsync(x => x.ID == id);
 
             if (user == null)
->>>>>>> Stashed changes
             {
-                new Claim(ClaimTypes.Name, user.Username)
-            };
+                return NotFound();
+            }
 
-<<<<<<< Updated upstream
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
-=======
             return Ok(user);
         }
 
@@ -177,15 +161,15 @@ namespace InvitationManagerAPI.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 _configuration.GetSection("AppSettings:Token").Value!));
->>>>>>> Stashed changes
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
                     claims: claims,
-                    expires: DateTime.Now.AddDays(1),
+                    expires: DateTime.Now.AddHours(1),
                     signingCredentials: creds
                 );
+
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;

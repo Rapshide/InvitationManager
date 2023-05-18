@@ -1,12 +1,13 @@
-<div class="full-height">
-  <div class="custom-width">
+<body>
+<div class="loginDiv">
+  <div>
     <ng-container *ngIf="loading">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </ng-container>
-    <mat-card>
-      <mat-card-content>
+    <div>
+      <div>
         <div class="content-wrapper">
-          <div class="title">Create Your Free InvitationManager Account</div>
+          <div class="title">Create Account</div>
         </div>
         <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
           <mat-form-field class="w-100" appearance="outline">
@@ -66,7 +67,8 @@
         <div class="mt-30">
           <a routerLink="/">Already have an account?</a>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>
+</body>
